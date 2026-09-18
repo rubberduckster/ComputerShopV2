@@ -461,23 +461,44 @@ namespace ElectronicShop
         // Assignment 9 // Work with collections inside collections
         static void ShowTags(List<Product> products)
         {
-            // 9
             Console.WriteLine("\n|| 9. Work with collections ||\n");
 
-            // Find all tags from products
+            // a. Find all tags from products
             var allTags = products.SelectMany(product => product.Tags);
 
-            // Find all unique tags
+            Console.WriteLine("=== All Tags ===");
+            foreach (string tag in allTags)
+            {
+                Console.WriteLine(tag);
+            }
+
+            // b. Find all unique tags
             var uniqueTags = products.SelectMany(product => product.Tags).Distinct();
 
-            // Find all products that are tagged with user search
+            Console.WriteLine("\n=== Unique Tags ===");
+            foreach (string tag in uniqueTags)
+            {
+                Console.WriteLine(tag);
+            }
+
+            // c. Find all products that are tagged with user search
             Console.Write("Search for tag: ");
             string searchedTag = Console.ReadLine();
 
             var matchingProducts = products.Where(product => product.Tags.Contains(searchedTag));
 
-            // Find how many unique tags exist
+            Console.WriteLine($"\n=== Products with tag: {searchedTag} ===");
+            foreach (Product product in matchingProducts)
+            {
+                Console.WriteLine(product.Name);
+            }
+
+            // d. Find how many unique tags exist
             int uniqueTagCount = products.SelectMany(product => product.Tags).Distinct().Count();
+
+            Console.WriteLine($"\nNumber of unique tags: {uniqueTagCount}");
+
+            Console.WriteLine();
         }
 
         // I seem to have forgotten about 10, but I'm limited on time, sorry for it being blank!
