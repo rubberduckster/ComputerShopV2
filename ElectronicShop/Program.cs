@@ -11,8 +11,6 @@ namespace ElectronicShop
     {
         static void Main(string[] args)
         {
-            // 1
-
             // List of products
             List<Product> products = new List<Product>
             {
@@ -32,6 +30,7 @@ namespace ElectronicShop
 
             bool running = true;
 
+            // Program loop
             while (running)
             {
                 Console.WriteLine("=== Electronic Shop LINQ ===");
@@ -102,9 +101,9 @@ namespace ElectronicShop
         // Assignment 1 // Search and filter data
         static void ShowFiltering(List<Product> products)
         {
-            // Using LINQ operators to get data
+            Console.WriteLine("\n|| 1. Search and filter data with LINQ ||\n");
 
-            // Get all computers
+            // a. Get all computers
             var computers = products.Where(product => product.Category == "Computer");
 
             Console.WriteLine("\n=== Computers ===");
@@ -113,7 +112,7 @@ namespace ElectronicShop
                 Console.WriteLine($"{product.Name} - {product.Price} kr.");
             }
 
-            // Get all products above 5000kr
+            // b. Get all products above 5000kr
             var expensiveProducts = products.Where(product => product.Price > 5000m);
 
             Console.WriteLine("\n=== Products above 5000 kr. ===");
@@ -122,7 +121,7 @@ namespace ElectronicShop
                 Console.WriteLine($"{product.Name} - {product.Price} kr.");
             }
 
-            // Get all products between 1000kr and 5000kr
+            // c. Get all products between 1000kr and 5000kr
             var midRangeProducts = products.Where(product => product.Price >= 1000m && product.Price <= 5000m);
 
             Console.WriteLine("\n=== Products between 1000 and 5000 kr. ===");
@@ -131,7 +130,7 @@ namespace ElectronicShop
                 Console.WriteLine($"{product.Name} - {product.Price} kr.");
             }
 
-            // Get all accessories above 1000kr
+            // d. Get all accessories above 1000kr
             var expensiveAccessories = products.Where(product => product.Category == "Tilbehør" && product.Price > 1000m);
 
             Console.WriteLine("\n=== Accessories above 1000 kr. ===");
@@ -140,7 +139,7 @@ namespace ElectronicShop
                 Console.WriteLine($"{product.Name} - {product.Price} kr.");
             }
 
-            // Get all products with "Gaming" in the name
+            // e. Get all products with "Gaming" in the name
             var gamingProducts = products.Where(product => product.Name.Contains("Gaming"));
 
             Console.WriteLine("\n=== Gaming products ===");
@@ -155,9 +154,9 @@ namespace ElectronicShop
         // Assignment 2 // Select and transform data
         static void ShowTransformations(List<Product> products)
         {
-            // 2
+            Console.WriteLine("\n|| 2. Select and transform data with LINQ ||\n");
 
-            // Return only product names
+            // a. Return only product names
             var productNames = products.Select(product => product.Name);
 
             Console.WriteLine("\n=== Product Names ===");
@@ -166,7 +165,7 @@ namespace ElectronicShop
                 Console.WriteLine(name);
             }
 
-            // Return product name and price
+            // b. Return product name and price
             var productNameAndPrice = products.Select(product => new
             {
                 product.Name,
@@ -179,7 +178,7 @@ namespace ElectronicShop
                 Console.WriteLine($"{product.Name} - {product.Price} kr.");
             }
 
-            // Anonymous type with name, category and price
+            // c. Anonymous type with name, category and price
             var productInfo = products.Select(product => new
             {
                 product.Name,
@@ -193,7 +192,7 @@ namespace ElectronicShop
                 Console.WriteLine($"{product.Name} - {product.Category} - {product.Price} kr.");
             }
 
-            // Transform each product into a formatted string
+            // d. Transform each product into a formatted string
             var productText = products.Select(product => $"{product.Name} koster {product.Price} kr.");
 
             Console.WriteLine("\n=== Formatted Product Text ===");
@@ -208,30 +207,65 @@ namespace ElectronicShop
         // Assignment 3 // Sort data
         static void ShowSorting(List<Product> products)
         {
-            // Sort by price - lowest to highest
+            Console.WriteLine("\n|| 3. Sort data with LINQ ||\n");
+
+            // a. Sort by price - lowest to highest
             var priceAscending = products.OrderBy(product => product.Price);
 
-            // Sort by price - highest to lowest
+            Console.WriteLine("\n=== Price - Lowest to Highest ===");
+            foreach (Product product in priceAscending)
+            {
+                Console.WriteLine($"{product.Name} - {product.Price} kr.");
+            }
+
+            // b. Sort by price - highest to lowest
             var priceDescending = products.OrderByDescending(product => product.Price);
 
-            // Sort by category
+            Console.WriteLine("\n=== Price - Highest to Lowest ===");
+            foreach (Product product in priceDescending)
+            {
+                Console.WriteLine($"{product.Name} - {product.Price} kr.");
+            }
+
+            // c. Sort by category
             var categorySorted = products.OrderBy(product => product.Category);
 
-            // Sort by category, then by price
+            Console.WriteLine("\n=== Sorted by Category ===");
+            foreach (Product product in categorySorted)
+            {
+                Console.WriteLine($"{product.Category} - {product.Name} - {product.Price} kr.");
+            }
+
+            // d. Sort by category, then by price
             var categoryThenPrice = products.OrderBy(product => product.Category).ThenBy(product => product.Price);
 
-            // Sort by category, then by product name
+            Console.WriteLine("\n=== Category, then Price ===");
+            foreach (Product product in categoryThenPrice)
+            {
+                Console.WriteLine($"{product.Category} - {product.Name} - {product.Price} kr.");
+            }
+
+            // e. Sort by category, then by product name
             var categoryThenName = products.OrderBy(product => product.Category).ThenBy(product => product.Name);
+
+            Console.WriteLine("\n=== Category, then Product Name ===");
+            foreach (Product product in categoryThenName)
+            {
+                Console.WriteLine($"{product.Category} - {product.Name} - {product.Price} kr.");
+            }
+
+            Console.WriteLine();
         }
 
         // Assignment 4 // Remove duplicates
         static void ShowUniqueCategories(List<Product> products)
         {
-            // 4
+            Console.WriteLine("\n|| 4. Remove duplicates with LINQ ||\n");
 
             // Get all unique categories
             var categories = products.Select(product => product.Category).Distinct();
 
+            Console.WriteLine("\n=== Unique Categories ===");
             foreach (string category in categories)
             {
                 Console.WriteLine(category);
@@ -241,63 +275,92 @@ namespace ElectronicShop
             int categoryCount = products.Select(product => product.Category).Distinct().Count();
 
             Console.WriteLine($"Number of categories: {categoryCount}");
+
+            Console.WriteLine();
         }
 
         // Assignment 5 // Check conditions
         static void ShowConditions(List<Product> products)
         {
-            // 5
+            Console.WriteLine("\n|| 5. Check conditions with LINQ ||\n");
 
-            // Check if at least one product costs more than 10000kr
+            // a. Check if at least one product costs more than 10000kr
             bool productAbove10000 = products.Any(product => product.Price > 10000m);
 
-            // Check if at least one product is in the "Skærm" category
+            // b. Check if at least one product is in the "Skærm" category
             bool hasScreen = products.Any(product => product.Category == "Skærm");
 
-            // Check if all products cost more than 500kr
+            // c. Check if all products cost more than 500kr
             bool allAbove500 = products.All(product => product.Price > 500m);
 
-            // Check if all computers cost more than 5000kr
+            // d. Check if all computers cost more than 5000kr
             bool allComputersAbove5000 = products.Where(product => product.Category == "Computer").All(product => product.Price > 5000m);
+
+            Console.WriteLine("\n=== Checking Conditions ===");
+            Console.WriteLine($"At least one product costs more than 10000 kr.: {productAbove10000}");
+            Console.WriteLine($"At least one product is a screen: {hasScreen}");
+            Console.WriteLine($"All products cost more than 500 kr.: {allAbove500}");
+            Console.WriteLine($"All computers cost more than 5000 kr.: {allComputersAbove5000}");
+
+            Console.WriteLine();
         }
 
         // Assignment 6 // Analyze data
         static void ShowAnalysis(List<Product> products)
         {
-            // 6
+            Console.WriteLine("\n|| 6. Analyze data with LINQ ||\n");
 
-            // Total number of products
+            // a. Total number of products
             int productCount = products.Count();
 
-            // Total value of all products
+            // b. Total value of all products
             decimal totalValue = products.Sum(product => product.Price);
 
-            // Average price of all products
+            // c. Average price of all products
             decimal averagePrice = products.Average(product => product.Price);
 
-            // Cheapest product
+            // d. Cheapest product
             Product? cheapestProduct = products.MinBy(product => product.Price);
 
-            // Most expensive product
+            // e. Most expensive product
             Product? mostExpensiveProduct = products.MaxBy(product => product.Price);
 
-            // Number of products in the "Computer" category
+            // f. Number of products in the "Computer" category
             int computerCount = products.Count(product => product.Category == "Computer");
 
-            // Average price of products in the "Tilbehør" category
+            // g. Average price of products in the "Tilbehør" category
             decimal accessoryAverage = products.Where(product => product.Category == "Tilbehør").Average(product => product.Price);
+
+            Console.WriteLine("\n=== Product Analysis ===");
+            Console.WriteLine($"Total number of products: {productCount}");
+            Console.WriteLine($"Total value of all products: {totalValue} kr.");
+            Console.WriteLine($"Average product price: {averagePrice:F2} kr.");
+
+            if (cheapestProduct != null)
+            {
+                Console.WriteLine($"Cheapest product: {cheapestProduct.Name} - {cheapestProduct.Price} kr.");
+            }
+
+            if (mostExpensiveProduct != null)
+            {
+                Console.WriteLine($"Most expensive product: {mostExpensiveProduct.Name} - {mostExpensiveProduct.Price} kr.");
+            }
+
+            Console.WriteLine($"Number of computers: {computerCount}");
+            Console.WriteLine($"Average accessory price: {accessoryAverage:F2} kr.");
+
+            Console.WriteLine();
         }
 
         // Assignment 7 // Group and analyze data
         static void ShowGrouping(List<Product> products)
         {
-            // 7
             Console.WriteLine("\n|| 7. Group with LINQ ||\n");
 
-            // Group products by category
+            // a. Group products by category
             var groupedProducts = products.GroupBy(product => product.Category);
 
-            // Display and analyze each category
+            // b. Display all products under their category
             foreach (var group in groupedProducts)
             {
                 Console.WriteLine(group.Key);
@@ -307,9 +370,14 @@ namespace ElectronicShop
                     Console.WriteLine($"- {product.Name}");
                 }
 
+                // c. Count the number of products in each category
                 Console.WriteLine($"Number of products: {group.Count()}");
+
+                // d. Calculate the average price in each category
                 Console.WriteLine($"Average price: {group.Average(product => product.Price)} kr.");
 
+
+                // e. Find the most expensive product in each category
                 Product? mostExpensive = group.MaxBy(product => product.Price);
                 Console.WriteLine($"Most expensive: {mostExpensive?.Name}");
 
@@ -320,22 +388,47 @@ namespace ElectronicShop
         // Assignment 8 // Limit and skip data
         static void ShowPagination(List<Product> products)
         {
-            // 8
             Console.WriteLine("\n|| 8. Limit and skip data with LINQ ||\n");
 
-            // Find the 3 most expensive products
+            // a. Find the 3 most expensive products
             var threeMostExpensive = products.OrderByDescending(product => product.Price).Take(3);
 
-            // Find the 5 cheapest products
+            Console.WriteLine("=== 3 Most Expensive Products ===");
+            foreach (Product product in threeMostExpensive)
+            {
+                Console.WriteLine($"{product.Name} - {product.Price} kr.");
+            }
+
+            // b. Find the 5 cheapest products
             var fiveCheapest = products.OrderBy(product => product.Price).Take(5);
 
-            // Sort all products by price descending
+            Console.WriteLine("\n=== 5 Cheapest Products ===");
+            foreach (Product product in fiveCheapest)
+            {
+                Console.WriteLine($"{product.Name} - {product.Price} kr.");
+            }
+
+
+            // c. Sort all products by price descending
             var productsDescending = products.OrderByDescending(product => product.Price);
 
-            // Keep products in positions 4-6
+            Console.WriteLine("\n=== Products by Descending Price ===");
+            foreach (Product product in productsDescending)
+            {
+                Console.WriteLine($"{product.Name} - {product.Price} kr.");
+            }
+
+
+            // d. Keep products in positions 4-6
             var productsFourToSix = productsDescending.Skip(3).Take(3);
 
-            // Pagination manually one page at the time
+            Console.WriteLine("\n=== Products in Positions 4-6 ===");
+            foreach (Product product in productsFourToSix)
+            {
+                Console.WriteLine($"{product.Name} - {product.Price} kr.");
+            }
+
+            // e. Pagination manually one page at the time
 
             // Page 1
             var page1 = products.Take(3);
@@ -346,21 +439,22 @@ namespace ElectronicShop
             // Page 3
             var page3 = products.Skip(6).Take(3);
 
-            // Pagination dynamically calculated
-
-            int pageSize = 3;
-            int totalPages = (int)Math.Ceiling((double)products.Count() / pageSize);
-
-            for (int pageNumber = 1; pageNumber <= totalPages; pageNumber++)
+            Console.WriteLine("\n=== Page 1 ===");
+            foreach (Product product in page1)
             {
-                var page = products.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+                Console.WriteLine(product.Name);
+            }
 
-                Console.WriteLine($"Page {pageNumber}");
+            Console.WriteLine("\n=== Page 2 ===");
+            foreach (Product product in page2)
+            {
+                Console.WriteLine(product.Name);
+            }
 
-                foreach (Product product in page)
-                {
-                    Console.WriteLine(product.Name);
-                }
+            Console.WriteLine("\n=== Page 3 ===");
+            foreach (Product product in page3)
+            {
+                Console.WriteLine(product.Name);
             }
         }
 
@@ -385,6 +479,8 @@ namespace ElectronicShop
             // Find how many unique tags exist
             int uniqueTagCount = products.SelectMany(product => product.Tags).Distinct().Count();
         }
+
+        // I seem to have forgotten about 10, but I'm limited on time, sorry for it being blank!
 
         // Assignment 10 // Full analysis of ElectronicShop
         static void ShowFullAnalysis(List<Product> products)
